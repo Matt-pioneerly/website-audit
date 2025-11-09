@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Law Firm Website Audit & Strategy Generator | Pioneerly</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 py-12 px-4">
+    <div class="max-w-5xl mx-auto">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-blue-100 rounded-full mb-6">
+                <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                </svg>
+            </div>
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                Website Audit & Strategy Generator
+            </h1>
+            <p class="text-xl text-blue-600 max-w-3xl mx-auto">
+                Get a personalized 30-day action plan to fix your website's biggest issues and start generating more clients.
+            </p>
+        </div>
+
+        <!-- Input Form -->
+        <div class="bg-white rounded-xl shadow-sm p-8 mb-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Your Current Metrics</h2>
+            
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-base font-medium text-gray-900 mb-3">
+                        Monthly Website Visitors
+                    </label>
+                    <input
+                        type="number"
+                        id="totalVisitors"
+                        class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., 2000"
+                    />
+                </div>
+
+                <div>
+                    <label class="block text-base font-medium text-gray-900 mb-3">
+                        Monthly Conversions (Forms + Calls)
+                    </label>
+                    <input
+                        type="number"
+                        id="totalConversions"
+                        class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., 60"
+                    />
+                </div>
+
+                <div>
+                    <label class="block text-base font-medium text-gray-900 mb-3">
+                        Mobile Bounce Rate (%)
+                    </label>
+                    <input
+                        type="number"
+                        id="mobileBounce"
+                        min="0"
+                        max="100"
+                        class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., 65"
+                    />
+                </div>
+
+                <div>
+                    <label class="block text-base font-medium text-gray-900 mb-3">
+                        Avg. Practice Page Time (minutes)
+                    </label>
+                    <input
+                        type="number"
+                        step="0.1"
+                        id="engagementTime"
+                        class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., 1.5"
+                    />
+                </div>
+
+                <div>
+                    <label class="block text-base font-medium text-gray-900 mb-3">
+                        Return Visitor Rate (%)
+                    </label>
+                    <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        id="returnRate"
+                        class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., 25"
+                    />
+                </div>
+
+                <div>
+                    <label class="block text-base font-medium text-gray-900 mb-3">
+                        Leads That Became Consultations (%)
+                    </label>
+                    <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        id="leadConversion"
+                        class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., 30"
+                    />
+                </div>
+            </div>
+
+            <button
+                id="calculateBtn"
+                class="w-full mt-8 bg-blue-600 text-white py-4 px-6 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+            >
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+                </svg>
+                Generate My Audit & Action Plan
+            </button>
+        </div>
+
+        <!-- Results Section (Hidden by default) -->
+        <div id="resultsSection" class="hidden space-y-8">
+            
+            <!-- Health Score -->
+            <div class="bg-white rounded-xl shadow-sm p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">Your Website Health Score</h2>
+                    <div class="text-right">
+                        <div class="text-5xl font-bold text-blue-600" id="healthScore">0</div>
+                        <div class="text-sm text-gray-600 mt-1">out of 100</div>
+                    </div>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
+                    <div id="scoreBar" class="bg-blue-600 h-3 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                </div>
+                <p id="scoreDescription" class="text-base text-gray-700"></p>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <p class="text-sm font-medium text-gray-600 mb-2">Current Conversion Rate</p>
+                    <p class="text-4xl font-bold text-gray-900" id="conversionRate">0%</p>
+                    <p class="text-sm text-gray-500 mt-2" id="conversionBench"></p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <p class="text-sm font-medium text-gray-600 mb-2">Potential Monthly Leads</p>
+                    <p class="text-4xl font-bold text-gray-900" id="potentialLeads">0</p>
+                    <p class="text-sm text-gray-500 mt-2">With optimizations</p>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm p-6">
+                    <p class="text-sm font-medium text-gray-600 mb-2">Critical Issues Found</p>
+                    <p class="text-4xl font-bold text-gray-900" id="issuesFound">0</p>
+                    <p class="text-sm text-gray-500 mt-2">Require immediate attention</p>
+                </div>
+            </div>
+
+            <!-- Priority Issues -->
+            <div class="bg-white rounded-xl shadow-sm p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Your Priority Issues</h2>
+                <div id="priorityIssues" class="space-y-4">
+                    <!-- Issues will be inserted here -->
+                </div>
+            </div>
+
+            <!-- 30-Day Action Plan -->
+            <div class="bg-blue-50 rounded-xl p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Your Personalized 30-Day Action Plan</h2>
+                <div id="actionPlan" class="space-y-6">
+                    <!-- Action plan will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Quick Wins -->
+            <div class="bg-green-50 rounded-xl p-8">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6">Quick Wins (Implement This Week)</h2>
+                <div id="quickWins" class="space-y-3">
+                    <!-- Quick wins will be inserted here -->
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="bg-blue-600 rounded-xl p-8 text-center text-white">
+                <h3 class="text-2xl font-bold mb-3">Want Expert Help Implementing This?</h3>
+                <p class="text-lg mb-6 text-blue-100">
+                    Get personalized guidance and weekly strategies in The Case for Growth newsletter.
+                </p>
+                <button
+                    id="showEmailForm"
+                    class="bg-white text-blue-600 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-blue-50 transition-colors inline-flex items-center gap-2"
+                >
+                    Send Me My Full Report
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Email Form (Hidden) -->
+            <div id="emailForm" class="hidden bg-white rounded-xl shadow-sm p-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6">Get Your Full Report & Action Plan</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-base font-medium text-gray-900 mb-2">Email Address</label>
+                        <input type="email" id="userEmail" placeholder="your.email@lawfirm.com" class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                    </div>
+                    <div>
+                        <label class="block text-base font-medium text-gray-900 mb-2">Firm Name (Optional)</label>
+                        <input type="text" id="firmName" placeholder="Your Law Firm" class="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                    </div>
+                    <button id="submitEmail" class="w-full bg-blue-600 text-white py-4 px-6 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors">
+                        Send My Report + Subscribe to Newsletter
+                    </button>
+                    <p class="text-sm text-gray-500 text-center">
+                        You'll get your detailed report immediately, plus join 500+ attorneys receiving weekly growth strategies.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy Note -->
+        <div class="text-center text-base text-gray-500 mt-8">
+            <p>All calculations are performed locally. Your data is not stored or shared.</p>
+        </div>
+    </div>
+
+    <script>
+        const calculateBtn = document.getElementById('calculateBtn');
+        const resultsSection = document.getElementById('resultsSection');
+        const showEmailFormBtn = document.getElementById('showEmailForm');
+        const emailForm = document.getElementById('emailForm');
+
+        calculateBtn.addEventListener('click', () => {
+            const visitors = parseFloat(document.getElementById('totalVisitors').value) || 0;
+            const conversions = parseFloat(document.getElementById('totalConversions').value) || 0;
+            const mobileBounce = parseFloat(document.getElementById('mobileBounce').value) || 0;
+            const engagementTime = parseFloat(document.getElementById('engagementTime').value) || 0;
+            const returnRate = parseFloat(document.getElementById('returnRate').value) || 0;
+            const leadConversion = parseFloat(document.getElementById('leadConversion').value) || 0;
+
+            if (visitors === 0 || conversions === 0) {
+                alert('Please enter at least your visitors and conversions.');
+                return;
+            }
+
+            generateReport(visitors, conversions, mobileBounce, engagementTime, returnRate, leadConversion);
+        });
+
+        function generateReport(visitors, conversions, mobileBounce, engagementTime, returnRate, leadConversion) {
+            const conversionRate = (conversions / visitors) * 100;
+
+            // Calculate health score
+            let score = 0;
+            let issues = [];
+
+            // Conversion rate (30 points)
+            if (conversionRate >= 8) {
+                score += 30;
+            } else if (conversionRate >= 5) {
+                score += 25;
+            } else if (conversionRate >= 3) {
+                score += 15;
+            } else if (conversionRate >= 2) {
+                score += 10;
+                issues.push({
+                    priority: 'high',
+                    title: 'Low Conversion Rate (CRITICAL)',
+                    description: `At ${conversionRate.toFixed(2)}%, you're below the 2-4% industry average. This is costing you clients daily.`,
+                    fix: 'Add prominent phone number, simplify forms to 4 fields, add trust signals near CTAs.'
+                });
+            } else {
+                score += 5;
+                issues.push({
+                    priority: 'high',
+                    title: 'Critical Conversion Rate Issue',
+                    description: `At ${conversionRate.toFixed(2)}%, your website is severely underperforming. Most visitors leave without contacting you.`,
+                    fix: 'Emergency fixes needed: Add click-to-call, reduce form friction, improve mobile experience immediately.'
+                });
+            }
+
+            // Mobile bounce (20 points)
+            if (mobileBounce < 40) {
+                score += 20;
+            } else if (mobileBounce < 50) {
+                score += 15;
+            } else if (mobileBounce < 60) {
+                score += 10;
+                issues.push({
+                    priority: 'medium',
+                    title: 'High Mobile Bounce Rate',
+                    description: `At ${mobileBounce}%, you're losing half your mobile visitors immediately.`,
+                    fix: 'Optimize images, increase font sizes, add click-to-call button, improve mobile navigation.'
+                });
+            } else {
+                score += 5;
+                issues.push({
+                    priority: 'high',
+                    title: 'Critical Mobile Experience Issues',
+                    description: `At ${mobileBounce}%, your mobile site is driving visitors away. This is a major problem since 65% of legal searches are mobile.`,
+                    fix: 'Rebuild with mobile-first design, compress images, fix load speed, simplify navigation immediately.'
+                });
+            }
+
+            // Engagement time (20 points)
+            if (engagementTime >= 3) {
+                score += 20;
+            } else if (engagementTime >= 2) {
+                score += 15;
+            } else if (engagementTime >= 1) {
+                score += 10;
+                issues.push({
+                    priority: 'medium',
+                    title: 'Low Page Engagement',
+                    description: `At ${engagementTime.toFixed(1)} minutes, visitors aren't reading your content thoroughly.`,
+                    fix: 'Add FAQ sections (10+ questions), include attorney videos, improve content structure with headers and bullets.'
+                });
+            } else {
+                score += 5;
+                issues.push({
+                    priority: 'high',
+                    title: 'Very Low Engagement Time',
+                    description: `At ${engagementTime.toFixed(1)} minutes, visitors are barely reading anything before leaving.`,
+                    fix: 'Complete content overhaul needed: Add FAQs, videos, case results, testimonials, pricing transparency.'
+                });
+            }
+
+            // Return rate (15 points)
+            if (returnRate >= 40) {
+                score += 15;
+            } else if (returnRate >= 30) {
+                score += 12;
+            } else if (returnRate >= 20) {
+                score += 8;
+            } else {
+                score += 4;
+                issues.push({
+                    priority: 'medium',
+                    title: 'Low Return Visitor Rate',
+                    description: `At ${returnRate}%, people research you once and never come back. You're not staying top-of-mind.`,
+                    fix: 'Create valuable content (blog 2-4x/month), build email list, run retargeting ads, offer downloadable resources.'
+                });
+            }
+
+            // Lead conversion (15 points)
+            if (leadConversion >= 50) {
+                score += 15;
+            } else if (leadConversion >= 40) {
+                score += 12;
+            } else if (leadConversion >= 25) {
+                score += 8;
+            } else {
+                score += 4;
+                issues.push({
+                    priority: 'high',
+                    title: 'Poor Lead-to-Consultation Conversion',
+                    description: `At ${leadConversion}%, you're losing leads after they contact you. Slow response time or poor intake process.`,
+                    fix: 'Implement 5-minute response target, add automated scheduling (Calendly), create follow-up sequences.'
+                });
+            }
+
+            score = Math.round(score);
+
+            // Display results
+            document.getElementById('healthScore').textContent = score;
+            document.getElementById('scoreBar').style.width = score + '%';
+
+            let scoreDesc = '';
+            if (score >= 80) {
+                scoreDesc = '🎉 Excellent! Your website is performing well. Focus on scaling what works and testing incremental improvements.';
+            } else if (score >= 60) {
+                scoreDesc = '✅ Good foundation. Strategic optimizations will take you from good to great and significantly increase leads.';
+            } else if (score >= 40) {
+                scoreDesc = '⚠️ Significant room for improvement. Follow the priority action plan to fix critical conversion killers.';
+            } else {
+                scoreDesc = '🚨 Critical issues detected. Your website is costing you clients every single day. Immediate action required.';
+            }
+            document.getElementById('scoreDescription').textContent = scoreDesc;
+
+            // Display metrics
+            document.getElementById('conversionRate').textContent = conversionRate.toFixed(2) + '%';
+            
+            let convBench = '';
+            if (conversionRate >= 8) convBench = 'Excellent (Top 10%)';
+            else if (conversionRate >= 5) convBench = 'Above Average';
+            else if (conversionRate >= 2) convBench = 'Industry Average';
+            else convBench = 'Below Average';
+            document.getElementById('conversionBench').textContent = convBench;
+
+            // Potential leads (if optimized to 7%)
+            const potentialLeads = Math.round((visitors * 0.07) - conversions);
+            document.getElementById('potentialLeads').textContent = '+' + potentialLeads;
+
+            document.getElementById('issuesFound').textContent = issues.length;
+
+            // Display priority issues
+            const priorityIssues = document.getElementById('priorityIssues');
+            priorityIssues.innerHTML = '';
+            issues.forEach((issue, index) => {
+                const priorityColors = {
+                    'high': 'border-red-500 bg-red-50',
+                    'medium': 'border-yellow-500 bg-yellow-50',
+                    'low': 'border-blue-500 bg-blue-50'
+                };
+                const div = document.createElement('div');
+                div.className = `border-l-4 ${priorityColors[issue.priority]} p-5 rounded-r-lg`;
+                div.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-gray-700">${index + 1}</div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-gray-900 mb-2">${issue.title}</h4>
+                            <p class="text-sm text-gray-700 mb-3">${issue.description}</p>
+                            <p class="text-sm font-medium text-gray-900"><strong>Fix:</strong> ${issue.fix}</p>
+                        </div>
+                    </div>
+                `;
+                priorityIssues.appendChild(div);
+            });
+
+            // Generate action plan
+            generateActionPlan(conversionRate, mobileBounce, engagementTime);
+
+            // Generate quick wins
+            generateQuickWins(conversionRate, mobileBounce);
+
+            // Show results
+            resultsSection.classList.remove('hidden');
+            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function generateActionPlan(conversionRate, mobileBounce, engagementTime) {
+            const actionPlan = document.getElementById('actionPlan');
+            actionPlan.innerHTML = '';
+
+            const weeks = [
+                {
+                    week: 'Week 1',
+                    title: 'Fix Critical Conversion Killers',
+                    condition: conversionRate < 5,
+                    tasks: [
+                        'Add prominent phone number to header (click-to-call on mobile)',
+                        'Reduce contact form to 4 fields maximum',
+                        'Add client testimonials/reviews near contact forms',
+                        'Test site on mobile and fix obvious UX issues'
+                    ],
+                    impact: '1-2 percentage point conversion improvement (50-100% increase)'
+                },
+                {
+                    week: 'Week 2',
+                    title: 'Optimize Practice Area Pages',
+                    condition: engagementTime < 2,
+                    tasks: [
+                        'Add comprehensive FAQ section (10+ questions)',
+                        'Include 2-3 minute attorney video introduction',
+                        'Add process explanation ("What to expect in first 30/60/90 days")',
+                        'Break up content with headers and bullet points'
+                    ],
+                    impact: '50-100% increase in engagement time, 20-30% better conversion'
+                },
+                {
+                    week: 'Week 3',
+                    title: 'Fix Mobile Experience',
+                    condition: mobileBounce > 60,
+                    tasks: [
+                        'Optimize and compress all images for mobile',
+                        'Increase font sizes to minimum 16px',
+                        'Make all buttons easily tappable (44x44px minimum)',
+                        'Add sticky phone button that stays visible while scrolling'
+                    ],
+                    impact: '15-25 point drop in mobile bounce rate, 30-50% more mobile leads'
+                },
+                {
+                    week: 'Week 4',
+                    title: 'Improve Lead Follow-Up',
+                    condition: true,
+                    tasks: [
+                        'Set up 5-minute response target with auto-responder',
+                        'Add Calendly or similar for instant consultation booking',
+                        'Create 3-email nurture sequence for leads not ready immediately',
+                        'Implement CRM tracking for all lead sources'
+                    ],
+                    impact: '20-40% improvement in lead-to-consultation conversion'
+                }
+            ];
+
+            weeks.filter(w => w.condition).forEach((week, index) => {
+                const div = document.createElement('div');
+                div.className = 'bg-white rounded-lg p-6 border-l-4 border-blue-600';
+                div.innerHTML = `
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">${week.week}: ${week.title}</h3>
+                    <ul class="space-y-2 mb-4">
+                        ${week.tasks.map(task => `<li class="flex items-start gap-2 text-gray-700"><span class="text-blue-600 font-bold">•</span> ${task}</li>`).join('')}
+                    </ul>
+                    <p class="text-sm font-semibold text-green-700">Expected Impact: ${week.impact}</p>
+                `;
+                actionPlan.appendChild(div);
+            });
+        }
+
+        function generateQuickWins(conversionRate, mobileBounce) {
+            const quickWins = document.getElementById('quickWins');
+            quickWins.innerHTML = '';
+
+            const wins = [
+                { condition: conversionRate < 5, text: 'Add your phone number to the website header (30 minutes)' },
+                { condition: conversionRate < 5, text: 'Reduce contact form fields to 4 maximum (15 minutes)' },
+                { condition: mobileBounce > 60, text: 'Add click-to-call button on mobile header (15 minutes)' },
+                { condition: mobileBounce > 60, text: 'Compress 5 largest images with TinyPNG.com (20 minutes)' },
+                { condition: true, text: 'Add clear CTA above fold on homepage (15 minutes)' },
+                { condition: true, text: 'Add 5-question FAQ to top practice area page (30 minutes)' },
+                { condition: true, text: 'Add one client testimonial near contact form (10 minutes)' },
+                { condition: conversionRate < 5, text: 'Test form submission process end-to-end and fix any issues (20 minutes)' }
+            ];
+
+            wins.filter(w => w.condition).forEach(win => {
+                const div = document.createElement('div');
+                div.className = 'flex items-start gap-3 bg-white p-4 rounded-lg border border-green-200';
+                div.innerHTML = `
+                    <svg class="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span class="text-gray-700">${win.text}</span>
+                `;
+                quickWins.appendChild(div);
+            });
+        }
+
+        showEmailFormBtn.addEventListener('click', () => {
+            emailForm.classList.remove('hidden');
+            emailForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        document.getElementById('submitEmail').addEventListener('click', () => {
+            const email = document.getElementById('userEmail').value;
+            if (email) {
+                alert('Thank you! Check your email for your full report.');
+            } else {
+                alert('Please enter your email address.');
+            }
+        });
+    </script>
+</body>
+</html>
